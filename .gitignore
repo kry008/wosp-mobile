@@ -1,0 +1,48 @@
+# .NET
+bin/
+obj/
+*.user
+*.suo
+*.cache
+*.log
+*.tmp
+*.nupkg
+packages/
+
+# MAUI specific
+*.apk
+*.aab
+*.ipa
+*.app
+*.dSYM
+*.xcarchive
+
+# Build outputs
+wosp-mobile/bin/
+wosp-mobile/obj/
+Platforms/Android/bin/
+Platforms/Android/obj/
+Platforms/iOS/bin/
+Platforms/iOS/obj/
+Platforms/MacCatalyst/bin/
+Platforms/MacCatalyst/obj/
+Platforms/Windows/bin/
+Platforms/Windows/obj/
+
+# IDE
+.vscode/
+.idea/
+.vs/
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# User secrets
+secrets.json
+
+# Temporary files
+*.tmp
+*.temp

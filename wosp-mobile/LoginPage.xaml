@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="wosp_mobile.LoginPage"
+             Title="Pomocnik sztabu"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{AppThemeBinding Light=#F0F8FF, Dark=#1A1A1A}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="30" Spacing="20">
+            
+            <!-- Tytuł -->
+            <Label 
+                Text="Pomocnik sztabu"
+                FontSize="36"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Margin="0,20,0,40"
+                TextColor="{AppThemeBinding Light=#2E8B57, Dark=#66CDAA}"/>
+
+            <!-- Miejsce na obraz z kamery -->
+            <Frame 
+                HeightRequest="300"
+                BackgroundColor="{AppThemeBinding Light=LightGray, Dark=#333333}"
+                CornerRadius="15"
+                Padding="0">
+                <Image 
+                    x:Name="CameraImage"
+                    Aspect="AspectFill"
+                    Source="dotnet_bot.png"/>
+            </Frame>
+
+            <!-- Przycisk Włącz/Wyłącz kamerę -->
+            <Button 
+                x:Name="CameraButton"
+                Text="Włącz kamerę"
+                Clicked="OnCameraButtonClicked"
+                HorizontalOptions="Fill"
+                BackgroundColor="#4CAF50"
+                TextColor="White"
+                CornerRadius="10"/>
+
+            <!-- Adres pomocnika -->
+            <Label 
+                Text="Adres pomocnika"
+                FontSize="18"
+                FontAttributes="Bold"
+                Margin="0,20,0,5"
+                TextColor="{AppThemeBinding Light=#333333, Dark=#E0E0E0}"/>
+            <Border 
+                BackgroundColor="{AppThemeBinding Light=White, Dark=#2D2D2D}"
+                Margin="0,0,0,10">
+                <Entry 
+                    x:Name="UrlEntry"
+                    Placeholder="https://wosp.kry008.ovh/"
+                    Keyboard="Url"
+                    TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                    PlaceholderColor="{AppThemeBinding Light=Gray, Dark=#808080}"/>
+            </Border>
+
+            <!-- Login użytkownika -->
+            <Label 
+                Text="Login użytkownika"
+                FontSize="18"
+                FontAttributes="Bold"
+                Margin="0,10,0,5"
+                TextColor="{AppThemeBinding Light=#333333, Dark=#E0E0E0}"/>
+            <Border 
+                BackgroundColor="{AppThemeBinding Light=White, Dark=#2D2D2D}"
+                Margin="0,0,0,10">
+                <Entry 
+                    x:Name="LoginEntry"
+                    Placeholder="Wprowadź login"
+                    TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                    PlaceholderColor="{AppThemeBinding Light=Gray, Dark=#808080}"/>
+            </Border>
+
+            <!-- Hasło -->
+            <Label 
+                Text="Hasło"
+                FontSize="18"
+                FontAttributes="Bold"
+                Margin="0,10,0,5"
+                TextColor="{AppThemeBinding Light=#333333, Dark=#E0E0E0}"/>
+            <Border 
+                BackgroundColor="{AppThemeBinding Light=White, Dark=#2D2D2D}"
+                Margin="0,0,0,10">
+                <Entry 
+                    x:Name="PasswordEntry"
+                    Placeholder="Wprowadź hasło"
+                    IsPassword="True"
+                    TextColor="{AppThemeBinding Light=Black, Dark=White}"
+                    PlaceholderColor="{AppThemeBinding Light=Gray, Dark=#808080}"/>
+            </Border>
+
+            <!-- Przycisk Zaloguj -->
+            <Button 
+                x:Name="LoginButton"
+                Text="Zaloguj"
+                Clicked="OnLoginButtonClicked"
+                BackgroundColor="{StaticResource Primary}"
+                TextColor="White"
+                Margin="0,30,0,0"
+                HorizontalOptions="Fill"
+                CornerRadius="10"
+                FontSize="18"
+                FontAttributes="Bold"/>
+
+            <!-- Status -->
+            <Label 
+                x:Name="StatusLabel"
+                TextColor="Red"
+                HorizontalOptions="Center"
+                IsVisible="False"
+                FontSize="16"/>
+            
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="wosp_mobile.MainPage">
+
+    <ScrollView BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+        <VerticalStackLayout Padding="20" Spacing="15">
+            <!-- Header -->
+            <Frame CornerRadius="15" Padding="20" Margin="0,10,0,20" 
+                   BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                   HasShadow="True">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="WOŚP" FontSize="32" FontAttributes="Bold" 
+                           TextColor="White" HorizontalOptions="Center"/>
+                    <Label Text="Pomocnik Sztabu" FontSize="18" 
+                           TextColor="White" HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Menu Cards -->
+            <Frame CornerRadius="12" Padding="15" Margin="0,5" HasShadow="True"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource CardBackground}, Dark={StaticResource CardBackgroundDark}}">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnVolunteerListClicked" />
+                </Frame.GestureRecognizers>
+                <HorizontalStackLayout Spacing="15">
+                    <Label Text="👥" FontSize="32" VerticalOptions="Center"/>
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                        <Label Text="Lista Wolontariuszy" FontSize="16" FontAttributes="Bold"/>
+                        <Label Text="Rozliczaj wolontariuszy" FontSize="12" Opacity="0.7"/>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <Frame CornerRadius="12" Padding="15" Margin="0,5" HasShadow="True"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource CardBackground}, Dark={StaticResource CardBackgroundDark}}">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnStatisticsSummaryClicked" />
+                </Frame.GestureRecognizers>
+                <HorizontalStackLayout Spacing="15">
+                    <Label Text="📊" FontSize="32" VerticalOptions="Center"/>
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                        <Label Text="Podsumowanie" FontSize="16" FontAttributes="Bold"/>
+                        <Label Text="Zobacz ogólne statystyki" FontSize="12" Opacity="0.7"/>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <Frame CornerRadius="12" Padding="15" Margin="0,5" HasShadow="True"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource CardBackground}, Dark={StaticResource CardBackgroundDark}}">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnStatisticsCountingClicked" />
+                </Frame.GestureRecognizers>
+                <HorizontalStackLayout Spacing="15">
+                    <Label Text="🧮" FontSize="32" VerticalOptions="Center"/>
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                        <Label Text="Statystyki Liczących" FontSize="16" FontAttributes="Bold"/>
+                        <Label Text="Sprawdź kto ile naliczył" FontSize="12" Opacity="0.7"/>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <Frame CornerRadius="12" Padding="15" Margin="0,5" HasShadow="True"
+                   BackgroundColor="{AppThemeBinding Light={StaticResource CardBackground}, Dark={StaticResource CardBackgroundDark}}">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnStatisticsVolunteerClicked" />
+                </Frame.GestureRecognizers>
+                <HorizontalStackLayout Spacing="15">
+                    <Label Text="🏆" FontSize="32" VerticalOptions="Center"/>
+                    <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                        <Label Text="Statystyki Wolontariuszy" FontSize="16" FontAttributes="Bold"/>
+                        <Label Text="Top wolontariusze" FontSize="12" Opacity="0.7"/>
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+            </Frame>
+
+            <Button x:Name="LogoutBtn" Text="🚪 Wyloguj" Clicked="OnLogoutClicked" 
+                    HorizontalOptions="Fill" Margin="0,20,0,10" 
+                    BackgroundColor="{AppThemeBinding Light={StaticResource Gray400}, Dark={StaticResource Gray600}}"/>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

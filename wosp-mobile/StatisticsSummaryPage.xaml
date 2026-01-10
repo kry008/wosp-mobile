@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="wosp_mobile.StatisticsSummaryPage"
+             Title="Podsumowanie Statystyk">
+
+    <Grid BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <Frame Grid.Row="0" CornerRadius="0" Padding="20" Margin="0" HasShadow="True"
+               BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}">
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="←" Clicked="OnBackClicked" BackgroundColor="Transparent" 
+                        TextColor="White" FontSize="24" Padding="5" WidthRequest="50"/>
+                <Label Text="Podsumowanie" FontSize="20" FontAttributes="Bold" 
+                       TextColor="White" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+        </Frame>
+
+        <ScrollView Grid.Row="1" Padding="15">
+            <VerticalStackLayout Spacing="15">
+                <!-- Summary Card -->
+                <Frame CornerRadius="15" Padding="20" Margin="0,5" HasShadow="True"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource SecondaryDark}}">
+                    <VerticalStackLayout Spacing="5">
+                        <Label Text="💰 Suma całkowita" FontSize="14" 
+                               TextColor="{StaticResource SecondaryDarkText}" HorizontalOptions="Center"/>
+                        <Label x:Name="SummaryLabel" Text="Ładowanie..." FontSize="32" FontAttributes="Bold"
+                               TextColor="{StaticResource SecondaryDarkText}" HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+                </Frame>
+
+                <!-- Top Volunteers -->
+                <Frame CornerRadius="12" Padding="15" Margin="0,5" HasShadow="True"
+                       BackgroundColor="{AppThemeBinding Light={StaticResource CardBackground}, Dark={StaticResource CardBackgroundDark}}">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="🏆 Top 5 Wolontariuszy" FontSize="18" FontAttributes="Bold" />
+                        <CollectionView x:Name="TopVolunteersCollectionView">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame CornerRadius="8" Padding="15" Margin="0,5" HasShadow="False"
+                                           BackgroundColor="{AppThemeBinding Light={StaticResource Gray100}, Dark={StaticResource Gray900}}">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" Text="{Binding numerID}" FontAttributes="Bold" FontSize="16"
+                                                   TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"
+                                                   VerticalOptions="Center" Margin="0,0,10,0"/>
+                                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                                <Label FontSize="14" FontAttributes="Bold">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="{Binding imie}" />
+                                                            <Span Text=" " />
+                                                            <Span Text="{Binding nazwisko}" />
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                            </VerticalStackLayout>
+                                            <Label Grid.Column="2" Text="{Binding suma, StringFormat='{0:F2} zł'}" 
+                                                   FontSize="16" FontAttributes="Bold" VerticalOptions="Center"
+                                                   TextColor="{AppThemeBinding Light={StaticResource Secondary}, Dark={StaticResource SecondaryDark}}"/>
+                                        </Grid>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Frame>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>

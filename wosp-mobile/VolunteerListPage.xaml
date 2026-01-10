@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="wosp_mobile.VolunteerListPage"
+             Title="Lista Wolontariuszy">
+
+
+
+    <Grid BackgroundColor="{AppThemeBinding Light={StaticResource PageBackground}, Dark={StaticResource PageBackgroundDark}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <!-- Header -->
+        <Frame Grid.Row="0" CornerRadius="0" Padding="20" Margin="0" HasShadow="True"
+               BackgroundColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}">
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="←" Clicked="OnBackClicked" BackgroundColor="Transparent" 
+                        TextColor="White" FontSize="24" Padding="5" WidthRequest="50"/>
+                <Label Text="Lista Wolontariuszy" FontSize="20" FontAttributes="Bold" 
+                       TextColor="White" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+        </Frame>
+
+        <!-- Content -->
+        <ScrollView Grid.Row="1" Padding="15">
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Wybierz wolontariusza do rozliczenia" FontSize="14" Opacity="0.7" Margin="5,10"/>
+                <CollectionView x:Name="VolunteersCollectionView">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Frame CornerRadius="10" Padding="15" Margin="0,5" HasShadow="True"
+                                   BackgroundColor="{AppThemeBinding Light={StaticResource CardBackground}, Dark={StaticResource CardBackgroundDark}}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <VerticalStackLayout Grid.Column="0" Spacing="5">
+                                        <Label Text="{Binding numerID}" FontAttributes="Bold" FontSize="18"
+                                               TextColor="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource PrimaryDark}}"/>
+                                        <Label FontSize="14">
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="{Binding imie}" />
+                                                    <Span Text=" " />
+                                                    <Span Text="{Binding nazwisko}" FontAttributes="Bold"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </VerticalStackLayout>
+                                    <Button Grid.Column="1" Text="Rozlicz →" Clicked="OnRozliczClicked" 
+                                            CommandParameter="{Binding id}" VerticalOptions="Center" 
+                                            CornerRadius="20" Padding="15,8"/>
+                                </Grid>
+                            </Frame>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>
