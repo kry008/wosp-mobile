@@ -62,5 +62,13 @@
 		<PackageReference Include="ZXing.Net.Maui" Version="0.7.3" />
 		<PackageReference Include="ZXing.Net.Maui.Controls" Version="0.7.3" />
 	</ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)'=='Release|net10.0-android'">
+	<AndroidKeyStore>true</AndroidKeyStore>
+
+	<AndroidSigningKeyStore>$(ANDROID_KEYSTORE_PATH)</AndroidSigningKeyStore>
+	<AndroidSigningKeyAlias>$(ANDROID_KEY_ALIAS)</AndroidSigningKeyAlias>
+	<AndroidSigningKeyPass>$(ANDROID_KEY_PASS)</AndroidSigningKeyPass>
+	<AndroidSigningStorePass>$(ANDROID_STORE_PASS)</AndroidSigningStorePass>
+	</PropertyGroup>
 
 </Project>
