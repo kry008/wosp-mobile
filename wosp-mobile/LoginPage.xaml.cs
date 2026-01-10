@@ -21,8 +21,8 @@ public partial class LoginPage : ContentPage
 	{
 		base.OnAppearing();
 		
-		// Ukryj kamerę na komputerach (Windows, Mac)
-		if (DeviceInfo.Platform == DevicePlatform.WinUI || DeviceInfo.Platform == DevicePlatform.MacCatalyst)
+		// Ukryj kamerę na komputerach (Windows, Mac), na razie błędy posiada, ukryj całkowicie
+		if (true || DeviceInfo.Platform == DevicePlatform.WinUI || DeviceInfo.Platform == DevicePlatform.MacCatalyst)
 		{
 			var frame = (Frame)CameraImage.Parent;
 			frame.IsVisible = false;
