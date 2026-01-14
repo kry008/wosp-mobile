@@ -1,5 +1,6 @@
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using ZXing.Net.Maui;
 using ZXing.Net.Maui.Controls;
 
@@ -10,6 +11,8 @@ public partial class LoginPage : ContentPage
 	private bool isCameraActive = false;
 	private readonly HttpClient httpClient;
 	private CameraBarcodeReaderView? barcodeReaderView;
+	private bool isProcessingBarcode = false;
+	private Image? originalImage;
 
 	public LoginPage()
 	{
@@ -21,13 +24,61 @@ public partial class LoginPage : ContentPage
 	{
 		base.OnAppearing();
 		
+		// Zapisz referencję do oryginalnego obrazu
+		if (originalImage == null)
+		{
+			originalImage = CameraImage;
+		}
+		
 		// Ukryj kamerę na komputerach (Windows, Mac), na razie błędy posiada, ukryj całkowicie
-		if (true || DeviceInfo.Platform == DevicePlatform.WinUI || DeviceInfo.Platform == DevicePlatform.MacCatalyst)
+		if (DeviceInfo.Platform == DevicePlatform.WinUI || DeviceInfo.Platform == DevicePlatform.MacCatalyst)
 		{
 			var frame = (Frame)CameraImage.Parent;
 			frame.IsVisible = false;
 			CameraButton.IsVisible = false;
 		}
+	}
+
+	protected override void OnDisappearing()
+	{
+		base.OnDisappearing();
+		
+		// Wyłącz kamerę i zwolnij zasoby przy opuszczaniu strony
+		if (isCameraActive)
+		{
+			DisposeCameraResources();
+		}
+	}
+
+	private void DisposeCameraResources()
+	{
+		try
+		{
+			if (barcodeReaderView != null)
+			{
+				barcodeReaderView.BarcodesDetected -= OnBarcodesDetected;
+				
+				// Przywróć obraz zastępczy
+				var frame = (Frame)barcodeReaderView.Parent;
+				if (frame != null && originalImage != null)
+				{
+					frame.Content = new Image 
+					{ 
+						Source = originalImage.Source,
+						Aspect = Aspect.AspectFill
+					};
+				}
+				
+				barcodeReaderView = null;
+			}
+		}
+		catch (Exception ex)
+		{
+			System.Diagnostics.Debug.WriteLine($"Błąd podczas czyszczenia zasobów kamery: {ex.Message}");
+		}
+		
+		isCameraActive = false;
+		isProcessingBarcode = false;
 	}
 
 	private async void OnCameraButtonClicked(object sender, EventArgs e)
@@ -36,6 +87,7 @@ public partial class LoginPage : ContentPage
 		{
 			// Włącz kamerę i skanowanie QR
 			isCameraActive = true;
+			isProcessingBarcode = false;
 			CameraButton.Text = "Wyłącz kamerę";
 			
 			try
@@ -47,7 +99,7 @@ public partial class LoginPage : ContentPage
 					status = await Permissions.RequestAsync<Permissions.Camera>();
 					if (status != PermissionStatus.Granted)
 					{
-						await DisplayAlertAsync("Brak uprawnień", "Aplikacja potrzebuje dostępu do kamery aby skanować kody QR", "OK");
+						await DisplayAlert("Brak uprawnień", "Aplikacja potrzebuje dostępu do kamery aby skanować kody QR", "OK");
 						isCameraActive = false;
 						CameraButton.Text = "Włącz kamerę";
 						return;
@@ -73,54 +125,50 @@ public partial class LoginPage : ContentPage
 			}
 			catch (Exception ex)
 			{
-				await DisplayAlertAsync("Błąd", $"Nie udało się uruchomić kamery: {ex.Message}", "OK");
-				isCameraActive = false;
+				await DisplayAlert("Błąd", $"Nie udało się uruchomić kamery: {ex.Message}", "OK");
+				DisposeCameraResources();
 				CameraButton.Text = "Włącz kamerę";
 			}
 		}
 		else
 		{
 			// Wyłącz kamerę
-			if (barcodeReaderView != null)
-			{
-				barcodeReaderView.BarcodesDetected -= OnBarcodesDetected;
-				
-				// Przywróć obraz zastępczy
-				var frame = (Frame)barcodeReaderView.Parent;
-				frame.Content = new Image 
-				{ 
-					Source = "dotnet_bot.png",
-					Aspect = Aspect.AspectFill
-				};
-				
-				barcodeReaderView = null;
-			}
-			
-			isCameraActive = false;
+			DisposeCameraResources();
 			CameraButton.Text = "Włącz kamerę";
 		}
 	}
 
 	private async void OnBarcodesDetected(object? sender, BarcodeDetectionEventArgs e)
 	{
+		// Zabezpieczenie przed wielokrotnym przetwarzaniem
+		if (isProcessingBarcode)
+			return;
+
 		// Pobierz pierwszy wykryty kod
 		var barcode = e.Results.FirstOrDefault();
 		if (barcode == null || string.IsNullOrWhiteSpace(barcode.Value))
 			return;
 
-		// Wyłącz detekcję aby nie skanować wielokrotnie
-		if (barcodeReaderView != null)
-		{
-			barcodeReaderView.BarcodesDetected -= OnBarcodesDetected;
-		}
+		// Ustaw flagę przetwarzania
+		isProcessingBarcode = true;
 
 		// Parsuj kod QR na głównym wątku
 		await MainThread.InvokeOnMainThreadAsync(async () =>
 		{
-			await ParseQRCode(barcode.Value);
-			
-			// Wyłącz kamerę
-			OnCameraButtonClicked(this, EventArgs.Empty);
+			try
+			{
+				await ParseQRCode(barcode.Value);
+				
+				// Wyłącz kamerę po udanym skanowaniu
+				DisposeCameraResources();
+				CameraButton.Text = "Włącz kamerę";
+			}
+			catch (Exception ex)
+			{
+				System.Diagnostics.Debug.WriteLine($"Błąd podczas przetwarzania kodu QR: {ex.Message}");
+				// Pozwól na ponowne skanowanie przy błędzie
+				isProcessingBarcode = false;
+			}
 		});
 	}
 
@@ -260,7 +308,10 @@ public partial class LoginPage : ContentPage
 	// Klasy pomocnicze
 	private class QRCodeData
 	{
+		[JsonPropertyName("url")]
 		public string Url { get; set; } = string.Empty;
+		
+		[JsonPropertyName("user")]
 		public string User { get; set; } = string.Empty;
 	}
 
