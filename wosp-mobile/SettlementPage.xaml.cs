@@ -133,7 +133,9 @@ public partial class SettlementPage : ContentPage
             {
                 VolunteerInfoLabel.Text = $"{result.wolontariusz.numerID} - {result.wolontariusz.imie} {result.wolontariusz.nazwisko}";
                 hasTerminal = result.hadTerminal;
-                TerminalFrame.IsVisible = hasTerminal;
+                TerminalFrame.IsVisible = true; // Zawsze widoczna sekcja
+                NoTerminalLabel.IsVisible = !hasTerminal;
+                TerminalControls.IsVisible = hasTerminal;
                 if (result.hadTerminal)
                 {
                     TerminalSwitch.IsToggled = true;

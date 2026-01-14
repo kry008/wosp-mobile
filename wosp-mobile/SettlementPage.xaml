@@ -35,7 +35,8 @@
             <Frame x:Name="TerminalFrame" CornerRadius="12" Padding="15" Margin="0,5" HasShadow="True"
                    BackgroundColor="{AppThemeBinding Light={StaticResource CardBackground}, Dark={StaticResource CardBackgroundDark}}">
                 <VerticalStackLayout Spacing="10">
-                    <HorizontalStackLayout Spacing="10">
+                    <Label x:Name="NoTerminalLabel" Text="Wolontariusz nie miał terminala" FontSize="14" IsVisible="False" HorizontalOptions="Center"/>
+                    <HorizontalStackLayout Spacing="10" x:Name="TerminalControls" IsVisible="False">
                         <Label Text="💳 Terminal" FontSize="16" FontAttributes="Bold" VerticalOptions="Center" HorizontalOptions="Start"/>
                         <Switch x:Name="TerminalSwitch" HorizontalOptions="End" Toggled="OnTerminalToggled"/>
                     </HorizontalStackLayout>
