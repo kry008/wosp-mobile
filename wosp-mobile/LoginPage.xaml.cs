@@ -99,7 +99,7 @@ public partial class LoginPage : ContentPage
 					status = await Permissions.RequestAsync<Permissions.Camera>();
 					if (status != PermissionStatus.Granted)
 					{
-						await DisplayAlert("Brak uprawnień", "Aplikacja potrzebuje dostępu do kamery aby skanować kody QR", "OK");
+						await DisplayAlertAsync("Brak uprawnień", "Aplikacja potrzebuje dostępu do kamery aby skanować kody QR", "OK");
 						isCameraActive = false;
 						CameraButton.Text = "Włącz kamerę";
 						return;
@@ -125,7 +125,7 @@ public partial class LoginPage : ContentPage
 			}
 			catch (Exception ex)
 			{
-				await DisplayAlert("Błąd", $"Nie udało się uruchomić kamery: {ex.Message}", "OK");
+				await DisplayAlertAsync("Błąd", $"Nie udało się uruchomić kamery: {ex.Message}", "OK");
 				DisposeCameraResources();
 				CameraButton.Text = "Włącz kamerę";
 			}

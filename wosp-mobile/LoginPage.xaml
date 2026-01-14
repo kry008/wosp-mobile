@@ -27,7 +27,7 @@
                 <Image 
                     x:Name="CameraImage"
                     Aspect="AspectFill"
-                    Source="dotnet_bot.png"/>
+                    Source="qr_code.jpg"/>
             </Frame>
 
             <!-- Przycisk Włącz/Wyłącz kamerę -->

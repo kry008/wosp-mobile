@@ -95,11 +95,28 @@ public class Volunteer
     public string numerID { get; set; } = string.Empty;
     public string imie { get; set; } = string.Empty;
     public string nazwisko { get; set; } = string.Empty;
-    // Dodaj inne właściwości jeśli potrzebne
+    public int zaznaczony { get; set; } = 0;
 }
 
 public class ApiResponse<T>
 {
     public bool success { get; set; }
     public T wolontariusze { get; set; } = default!;
+}
+
+public class IntToTextDecorationConverter : IValueConverter
+{
+    public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    {
+        if (value is int zaznaczony && zaznaczony == 1)
+        {
+            return TextDecorations.Underline;
+        }
+        return TextDecorations.None;
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+    {
+        throw new NotImplementedException();
+    }
 }

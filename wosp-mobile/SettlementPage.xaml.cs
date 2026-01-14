@@ -133,6 +133,7 @@ public partial class SettlementPage : ContentPage
             {
                 VolunteerInfoLabel.Text = $"{result.wolontariusz.numerID} - {result.wolontariusz.imie} {result.wolontariusz.nazwisko}";
                 hasTerminal = result.hadTerminal;
+                await DisplayAlertAsync("Informacja", hasTerminal ? "Wolontariusz posiada terminal płatniczy." : "Wolontariusz nie posiada terminala płatniczego.", "OK");
                 TerminalFrame.IsVisible = true; // Zawsze widoczna sekcja
                 NoTerminalLabel.IsVisible = !hasTerminal;
                 TerminalControls.IsVisible = hasTerminal;
