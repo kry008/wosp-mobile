@@ -46,7 +46,11 @@ public partial class App : Application
 			}
 			catch
 			{
-				// olewamy
+				//wyczyść dane logowania, gdy błąd połączenia
+				Preferences.Remove("auth_token");
+				Preferences.Remove("token_expires_at");
+				Preferences.Remove("base_url");
+				Preferences.Remove("username");
 			}
 		}
 
